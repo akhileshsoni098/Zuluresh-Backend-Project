@@ -119,7 +119,6 @@ exports.verifyOtp = async (req, res) => {
           totalPrice: cartData.totalPrice,
           totalItems: cartData.totalItems
         };
-
         const addCart = await cartModel.create(data);
         cartId = addCart._id.toString();
       } else {

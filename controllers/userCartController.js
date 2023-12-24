@@ -345,7 +345,7 @@ exports.checkOut = async (req, res) => {
     
     const shipCharge = await Shipping.find();
 
-    if (shipCharge) {
+    if (shipCharge && cartDetails.Price>0) {
       if (parseFloat(cartSummary.totalPrice) >= parseFloat(shipCharge[0].freeShipingLimit)) {
         let totalPrice = parseFloat(cartSummary.totalPrice);
         cartDetails.TotalPrice = totalPrice;

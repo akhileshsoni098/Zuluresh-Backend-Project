@@ -15,7 +15,7 @@ router
 
 router.route("/changeAddress/:addressId").put(authentication, updateAddress);
 
-router.route("/AllAddress").get(authentication, getAllAddresses);
+router.route("/allAddress").get(authentication, getAllAddresses);
 
 router
   .route("/getSingleAddress/:addressId")

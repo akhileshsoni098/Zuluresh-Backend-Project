@@ -1112,9 +1112,788 @@ DELETE baseUrl/admin/product/deleteProduct/:Id
 }
 ```
 
+#################################################################################
+
+
+
+
+
+## Remains
+
+
+
 
 
 /////////
 Order , payment , AbandonedCart , userDetails Remains 
 
 /////////
+
+
+
+
+#####################################################################################
+
+Absolutely! Here's the revised format for your user authentication and verification routes:
+
+### User Authentication Routes
+
+#### Sign-Up
+
+#### Route
+
+```
+POST baseUrl/user/auth/signUp
+```
+
+#### Request Body
+
+```json
+{
+    "number": "912529XXXX"
+}
+```
+
+#### Response
+
+```json
+{
+    "message": "OTP sent successfully!"
+}
+```
+
+### Verification (Scenario 1)
+
+
+
+#### Route
+
+```
+POST baseUrl/user/auth/verification
+```
+
+#### Request Body
+
+```json
+{
+    "number": "912529XXXX",
+    "otp": "2195",
+    "items": [],
+    "totalPrice": null,
+    "totalItems": null
+}
+```
+
+#### Response
+
+```json
+{
+    "status": true,
+    "message": "User verified successfully!",
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIwMDAwMiIsIl9pZCI6IjY1ODg4MmU5NGI2NDQ4ODIzZjk3MDA0NiIsIm51bWJlciI6IjkxMjUyOTI5MTIiLCJpYXQiOjE3MDM0NDUyNzh9.8Bb7_h6uT0oBqkMgIlvX1WC6zMjvmDlP2JDnWRj-msU",
+    "data": {
+        "_id": "658882e94b6448823f970046",
+        "number": "912529XXXX",
+        "userId": "00002",
+        "createdAt": "2023-12-24T19:13:45.394Z",
+        "updatedAt": "2023-12-24T19:13:45.394Z",
+        "__v": 0
+    },
+    "cartId": "658883204b6448823f970052"
+}
+```
+
+### Verification (Scenario 2)
+
+Description: If the cart has some items before login.
+
+#### Route
+
+```
+POST baseUrl/user/auth/verification
+```
+
+#### Request Body
+
+```json
+{
+    "number": "912529XXXX",
+    "otp": "2373",
+    "items": [{
+        "productId": "658860f7d2f02c69ec72b399",
+        "quantity": 1
+    }],
+    "totalPrice": 300,
+    "totalItems": 1
+}
+```
+
+#### Response
+
+```json
+{
+    "status": true,
+    "message": "User verified successfully!",
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIwMDAwMSIsIl9pZCI6IjY1ODg3ZjM2NGI2NDQ4ODIzZjk3MDAyYyIsIm51bWJlciI6IjkxMjUyOTI5MTAiLCJpYXQiOjE3MDM0NDQ4NTF9.rSY5qQKc2iT9_iwjNajGE5wVWJpoThWmejGc_wa_r2Y",
+    "data": {
+        "_id": "65887f364b6448823f97002c",
+        "number": "912529XXXX",
+        "userId": "00001",
+        "createdAt": "2023-12-24T18:57:58.281Z",
+        "updatedAt": "2023-12-24T18:57:58.281Z",
+        "__v": 0
+    }
+}
+```
+
+#########################################################################
+
+
+### User Cart Route
+
+#### Add to Cart
+
+#### Route
+
+```
+POST baseUrl/user/cart/addToCart
+```
+
+#### Headers
+
+```
+x-auth-token: werdtyfyguhijugyftrdestcygvhbjnhugyftrdesxdfcggvhbgfdr
+```
+
+#### Request Body
+
+```json
+{
+    "productId": "64a06e26f57db7ce4817f296"
+}
+```
+
+#### Response
+
+```json
+{
+    "status": false,
+    "data": {
+        "_id": "658883204b6448823f970052",
+        "userId": "658882e94b6448823f970046",
+        "items": [
+            {
+                "productId": "658860f7d2f02c69ec72b399",
+                "quantity": 2
+            }
+        ],
+        "totalPrice": 600,
+        "totalItems": 1,
+        "userID": "00002",
+        "createdAt": "2023-12-24T19:14:40.535Z",
+        "updatedAt": "2023-12-24T19:31:17.221Z",
+        "__v": 0
+    }
+}
+```
+
+#### Update Cart
+
+##### Route
+
+```
+PUT baseUrl/user/cart/updateCart
+```
+
+##### Headers
+
+```
+x-auth-token: werdtyfyguhijugyftrdestcygvhbjnhugyftrdesxdfcggvhbgfdr
+```
+
+##### Request Body (Remove Product)
+
+```json
+{
+    "productId": "658860f7d2f02c69ec72b399",
+    "removeProduct": "0"
+}
+```
+
+##### Response (Remove Product)
+
+```json
+{
+    "status": true,
+    "message": "Success",
+    "data": {
+        "_id": "658883204b6448823f970052",
+        "userId": "658882e94b6448823f970046",
+        "items": [],
+        "totalPrice": 0,
+        "totalItems": 0,
+        "userID": "00002",
+        "createdAt": "2023-12-24T19:14:40.535Z",
+        "updatedAt": "2023-12-24T19:36:49.595Z",
+        "__v": 0
+    }
+}
+```
+
+##### Request Body (Reduce Product Quantity)
+
+```json
+{
+    "productId": "658860f7d2f02c69ec72b399",
+    "removeProduct": "1"
+}
+```
+
+##### Response (Reduce Product Quantity)
+
+```json
+{
+    "status": true,
+    "message": "Success",
+    "data": {
+        "_id": "658883204b6448823f970052",
+        "userId": "658882e94b6448823f970046",
+        "items": [
+            {
+                "productId": "658860f7d2f02c69ec72b399",
+                "quantity": 1
+            }
+        ],
+        "totalPrice": 300,
+        "totalItems": 1,
+        "userID": "00002",
+        "createdAt": "2023-12-24T19:14:40.535Z",
+        "updatedAt": "2023-12-24T19:40:28.514Z",
+        "__v": 0
+    }
+}
+```
+
+#### Checkout Cart
+
+##### Route
+
+```
+GET baseUrl/user/cart/checkOut
+```
+
+##### Headers
+
+```
+x-auth-token: werdtyfyguhijugyftrdestcygvhbjnhugyftrdesxdfcggvhbgfdr
+```
+
+##### Response
+
+```json
+{
+    "status": true,
+    "message": "success",
+    "data": {
+        "productsData": [
+            {
+                "Product_id": "658860f7d2f02c69ec72b399",
+                "Product_title": "Best delicius Item for sale ",
+                "Product_category": "Chicken",
+                "Product_MRP": 550,
+                "Product_price": 300,
+                "Product_quantity": 1,
+                "Product_image": "https://res.cloudinary.com/dscgsptzy/image/upload/v1703436536/products/dscag0gva4nwtjs3itwm.png",
+                "weight": 250
+            }
+        ],
+        "totalItems": 1,
+        "Discount": 250,
+        "TotalMrp": 550,
+        "cartId": "658883204b6448823f970052",
+        "userId": "658882e94b6448823f970046",
+        "Price": 300,
+        "TotalPrice": 370,
+        "Shipping": 70
+    }
+}
+```
+
+#### Delete Cart (Clear Cart)
+
+##### Route
+
+```
+DELETE baseUrl/user/cart/deleteCart
+```
+
+##### Headers
+
+```
+x-auth-token: werdtyfyguhijugyftrdestcygvhbjnhugyftrdesxdfcggvhbgfdr
+```
+
+##### Request Body
+
+```json
+{
+    "cartId": "658883204b6448823f970052"
+}
+```
+
+##### Response
+
+```json
+{
+    "status": true,
+    "message": "Cart has been deleted"
+}
+```
+
+
+
+
+##################################################################################
+Absolutely! Here's the full content organized in the `readme.md` format:
+
+### User Address Route
+
+#### Add Address
+
+- **Route**: `POST baseUrl/user/address/addAddress`
+- **Auth**: Mandatory
+- **Request Body**:
+
+    ```json
+    {
+        "name": "Sumit",
+        "phoneNo": "99786756XX",
+        "houseFlatNo": "90A",
+        "blockName": "shibvali",
+        "street": "chaunhan",
+        "landMark": "shiv temple",
+        "pinCode": "140301",
+        "locality": "haridwar",
+        "saveAddressAs": "Home"
+    }
+    ```
+
+- **Response**:
+
+    ```json
+    {
+        "status": true,
+        "message": "Address added successfully",
+        "data": { 
+            "_id": "658893f183296b33e5953e22",
+            "name": "Sumit",
+            "phoneNo": "99786756XX",
+            "houseFlatNo": "90A",
+            "blockName": "shibvali",
+            "street": "chaunhan",
+            "landMark": "shiv temple",
+            "pinCode": "140301",
+            "locality": "haridwar",
+            "saveAddressAs": "Home",
+            "userId": "658882e94b6448823f970046",
+            "userID": "00002",
+            "setAsDefault": true,
+            "createdAt": "2023-12-24T20:26:25.286Z",
+            "updatedAt": "2023-12-24T20:26:26.104Z",
+            "__v": 0
+        }
+    }
+    ```
+
+#### Get All Addresses
+
+- **Route**: `GET baseurl/user/address/allAddress`
+- **Auth**: Mandatory
+- **Response**:
+
+    ```json
+    {
+        "status": true,
+        "data": [
+            {
+                "_id": "658893f183296b33e5953e22",
+                "name": "Sumit",
+                "phoneNo": "99786756XX",
+                "houseFlatNo": "90A",
+                "blockName": "shibvali",
+                "street": "chaunhan",
+                "landMark": "shiv temple",
+                "pinCode": "140301",
+                "locality": "haridwar",
+                "saveAddressAs": "Home",
+                "userId": "658882e94b6448823f970046",
+                "userID": "00002",
+                "setAsDefault": true,
+                "createdAt": "2023-12-24T20:26:25.286Z",
+                "updatedAt": "2023-12-24T20:26:26.104Z",
+                "__v": 0
+            },
+            {
+                "_id": "6588941783296b33e5953e27",
+                "name": "Sumit",
+                "phoneNo": "99786756XX",
+                "houseFlatNo": "90A",
+                "blockName": "shibvali",
+                "street": "chaunhan",
+                "landMark": "shiv temple",
+                "pinCode": "140301",
+                "locality": "haridwar",
+                "saveAddressAs": "Home",
+                "userId": "658882e94b6448823f970046",
+                "userID": "00002",
+                "setAsDefault": false,
+                "createdAt": "2023-12-24T20:27:03.612Z",
+                "updatedAt": "2023-12-24T20:27:03.612Z",
+                "__v": 0
+            }
+        ]
+    }
+    ```
+
+#### Set Default Address
+
+- **Route**: `PUT baseUrl/user/address/setDefaultAddress/:addressId`
+- **Auth**: Mandatory
+- **Response**:
+
+    ```json
+    {
+        "status": true,
+        "message": "Default address set successfully",
+        "data": { 
+            "_id": "658893f183296b33e5953e22",
+            "name": "Sumit",
+            "phoneNo": "99786756XX",
+            "houseFlatNo": "90A",
+            "blockName": "shibvali",
+            "street": "chaunhan",
+            "landMark": "shiv temple",
+            "pinCode": "140301",
+            "locality": "haridwar",
+            "saveAddressAs": "Home",
+            "userId": "658882e94b6448823f970046",
+            "userID": "00002",
+            "setAsDefault": true,
+            "createdAt": "2023-12-24T20:26:25.286Z",
+            "updatedAt": "2023-12-24T20:26:26.104Z",
+            "__v": 0
+        }
+    }
+    ```
+
+#### Update Existing Address
+
+- **Route**: `PUT baseUrl/user/address/changeAddress/:addressId`
+- **Auth**: Mandatory
+- **Request Body**:
+
+    ```json
+    {
+        "name": "Sumit",
+        "phoneNo": "99786756XX",
+        "houseFlatNo": "90A",
+        "blockName": "shibvali",
+        "street": "chaunhan",
+        "landMark": "shiv temple",
+        "pinCode": "140301",
+        "locality": "haridwar",
+        "saveAddressAs": "Home"
+    }
+    ```
+
+- **Response**:
+
+    ```json
+    {
+        "status": true,
+        "message": "Address updated successfully",
+        "data": { 
+            "_id": "658893f183296b33e5953e22",
+            "name": "Sumit",
+            "phoneNo": "99786756XX",
+            "houseFlatNo": "90A",
+            "blockName": "shibvali",
+            "street": "chaunhan",
+            "landMark": "shiv temple",
+            "pinCode": "140301",
+            "locality": "haridwar",
+            "saveAddressAs": "Home",
+            "userId": "658882e94b6448823f970046",
+            "userID": "00002",
+            "setAsDefault": true,
+            "createdAt": "2023-12-24T20:26:25.286Z",
+            "updatedAt": "2023-12-24T20:26:26.104Z",
+            "__v": 0
+        }
+    }
+    ```
+
+#### Get Particular Address
+- **Auth**: Mandatory
+
+- **Route**: `GET baseUrl/user/address/getSingleAddress/:addressId`
+- **Response**:
+
+    ```json
+    {
+        "status": true,
+        "message": "Address updated successfully",
+        "data": { 
+            "_id": "658893f183296b33e5953e22",
+            "name": "Sumit",
+            "phoneNo": "99786756XX",
+            "houseFlatNo": "90A",
+            "blockName": "shibvali",
+            "street": "chaunhan",
+            "landMark": "shiv temple",
+            "pinCode": "140301",
+            "locality": "haridwar",
+            "saveAddressAs": "Home",
+            "userId": "658882e94b6448823f970046",
+            "userID": "00002",
+            "setAsDefault": true,
+            "createdAt": "2023-12-24T20:26:25.286Z",
+            "updatedAt": "2023-12-24T20:26:26.104Z",
+            "__v": 0
+        }
+    }
+    ```
+
+#### Delete Address
+
+- **Route**: `DELETE baseUrl/user/address/deleteAddress/:addressId`
+- **Auth**: Mandatory
+- **Response**:
+
+    ```json
+    {
+        "status": true,
+        "message": "address removed"
+    }
+    ```
+
+#########################################################################
+
+
+
+### Select Time Slot for Delivery
+
+- **Route**: `GET baseurl/public/getTimeSlot`
+- **Response**:
+
+    ```json
+    {
+        "status": true,
+        "timeSlots": [
+            {
+                "_id": "65889993c00668a378995b3a",
+                "day": "Monday (25 Dec)",
+                "startTime": "04:23AM",
+                "endTime": "7:40AM",
+                "__v": 0
+            },
+            {
+                "_id": "658899afc00668a378995b3c",
+                "day": "Monday (25 Dec)",
+                "startTime": "07:40AM",
+                "endTime": "8:40AM",
+                "__v": 0
+            },
+            {
+                "_id": "658899bbc00668a378995b3e",
+                "day": "Monday (25 Dec)",
+                "startTime": "08:40AM",
+                "endTime": "10:40AM",
+                "__v": 0
+            }
+        ]
+    }
+    ```
+
+############################################################################
+
+### User Order Route
+
+#### Create Order
+
+- **Auth**: Mandatory
+
+- **Route**: `POST baseUrl/user/order/createOrder/:addressId`
+- **Request Body**:
+
+    ```json
+    {
+      "deliverySlot": {
+        "day": "Monday (25 Dec)",
+        "startTime": "08:40AM",
+        "endTime": "10:40AM"
+      },
+      "promoCode": "SUMMER28",
+      "paymentMethod": {
+        "cod": true
+      }
+    }
+    ```
+- **Response**:
+
+    ```json
+    {
+        "status": true,
+        "message": "Order created successfully",
+        "data": {
+            "shippingInfo": {
+                "name": "Sumit",
+                "phoneNo": "99786756XX",
+                "houseFlatNo": "90A",
+                "blockName": "shibvali",
+                "street": "chaunhan",
+                "landMark": "shiv temple",
+                "pinCode": "140301",
+                "locality": "haridwar",
+                "saveAddressAs": "Home",
+                "deliverySlot": {
+                    "day": "Monday (25 Dec)",
+                    "startTime": "08:40AM",
+                    "endTime": "10:40AM"
+                }
+            },
+            "items": [
+                {
+                    "productId": "658860f7d2f02c69ec72b399",
+                    "quantity": 1,
+                    "_id": "65889cbfc00668a378995b4b"
+                }
+            ],
+            "shippingPrice": 70,
+            "totalPrice": 265,
+            "totalItems": 1,
+            "paymentMethod": {
+                "cod": true,
+                "online": false
+            },
+            "orderStatus": "Processing",
+            "userId": "658882e94b6448823f970046",
+            "orderId": "ORD0001",
+            "userID": "00002",
+            "_id": "65889cbfc00668a378995b4a",
+            "createdAt": "2023-12-24T21:03:59.729Z",
+            "updatedAt": "2023-12-24T21:03:59.729Z",
+            "__v": 0
+        }
+    }
+    ```
+
+#### Get All Orders
+- **Auth**: Mandatory
+
+- **Route**: `GET baseUrl/user/order/allOrders`
+- **Response**:
+
+    ```json
+    {
+        "status": true,
+        "message": "success",
+        "data": [
+            {
+                "shippingInfo": {
+                    "deliverySlot": {
+                        "day": "Monday (25 Dec)",
+                        "startTime": "08:40AM",
+                        "endTime": "10:40AM"
+                    },
+                    "name": "Sumit",
+                    "phoneNo": "99786756XX",
+                    "houseFlatNo": "90A",
+                    "blockName": "shibvali",
+                    "street": "chaunhan",
+                    "landMark": "shiv temple",
+                    "pinCode": "140301",
+                    "locality": "haridwar",
+                    "saveAddressAs": "Home"
+                },
+                "paymentMethod": {
+                    "cod": true,
+                    "online": false
+                },
+                "_id": "65889cbfc00668a378995b4a",
+                "items": [
+                    {
+                        "productId": "658860f7d2f02c69ec72b399",
+                        "quantity": 1,
+                        "_id": "65889cbfc00668a378995b4b"
+                    }
+                ],
+                "shippingPrice": 70,
+                "totalPrice": 265,
+                "totalItems": 1,
+                "orderStatus": "Processing",
+                "userId": "658882e94b6448823f970046",
+                "orderId": "ORD0001",
+                "userID": "00002",
+                "createdAt": "2023-12-24T21:03:59.729Z",
+                "updatedAt": "2023-12-24T21:03:59.729Z",
+                "__v": 0
+            }
+        ]
+    }
+    ```
+
+#### Get Single Order
+- **Auth**: Mandatory
+
+- **Route**: `GET baseUrl/user/order/getOrder/:orderId`
+- **Response**:
+
+    ```json
+    {
+        "status": true,
+        "orderData": {
+            "address": {
+                "name": "Sumit",
+                "phone": "99786756XX",
+                "houseNo": "90A",
+                "block": "shibvali",
+                "street": "chaunhan",
+                "Landmark": "shiv temple",
+                "pincode": "140301",
+                "locality": "haridwar",
+                "AddressAs": "Home",
+                "deliverySlot": "Monday (25 Dec),08:40AM - 10:40AM"
+            },
+            "ProductDetails": [
+                {
+                    "Product_id": "658860f7d2f02c69ec72b399",
+                    "Product_title": "Best delicius Item for sale ",
+                    "Product_category": "Chicken",
+                    "ProductImg": "https://res.cloudinary.com/dscgsptzy/image/upload/v1703436536/products/dscag0gva4nwtjs3itwm.png",
+                    "Product_MRP": 550,
+                    "Product_price": 300,
+                    "Product_quantity": 1,
+                    "weight": 250
+                }
+            ],
+            "totalPrice": 265,
+            "Discount": 285,
+            "orderId": "ORD0001",
+            "PaymentInfo": {},
+            "PaymentMethod": {
+                "cod": true,
+                "online": false
+            },
+            "Order_Status": "Processing",
+            "Shipping": 70
+        }
+    }
+    ```
+
+#####################################################################################
+
+
+user Details remains and public route remains 
+
+

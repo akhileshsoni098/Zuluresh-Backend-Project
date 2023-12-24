@@ -357,7 +357,7 @@ exports.deleteAddress = async (req, res) => {
       userId: userId,
     },{new:true});
 
-res.status(200).json({status:false , message:"address removed"})
+res.status(200).json({status:true , message:"address removed"})
 
   } catch (error) {
     res.status(500).json({ status: false, message: error.message });
