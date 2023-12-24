@@ -1134,7 +1134,6 @@ Order , payment , AbandonedCart , userDetails Remains
 
 #####################################################################################
 
-Absolutely! Here's the revised format for your user authentication and verification routes:
 
 ### User Authentication Routes
 
@@ -1454,7 +1453,7 @@ x-auth-token: werdtyfyguhijugyftrdestcygvhbjnhugyftrdesxdfcggvhbgfdr
 
 
 ##################################################################################
-Absolutely! Here's the full content organized in the `readme.md` format:
+
 
 ### User Address Route
 
