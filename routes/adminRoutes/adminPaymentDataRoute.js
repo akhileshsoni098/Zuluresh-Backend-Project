@@ -10,6 +10,7 @@ const router = express.Router()
 ////// payment info /////////
 
 router.route("/paymentByUser/:userId").get(paymentByUser);
+
 router.route("/paymentByOrder/:userId").get(paymentByOrder);
 
 

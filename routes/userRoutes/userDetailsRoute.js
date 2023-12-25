@@ -12,7 +12,7 @@ router.route("/profile").post(authentication, createCustomerData);
 
 router.route("/default/:addressId").put(authentication, updateCustomer);
 
-router.route("/profile").get(authentication, getProfile);
+router.route("/getprofile").get(authentication, getProfile);
 
 
 module.exports = router
